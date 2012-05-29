@@ -61,4 +61,16 @@ action :create do
     subscribes :run, resources(:directory => site_path), :immediately
     only_if { (::Dir.entries(site_path) - %w[. ..]).count == 0 }
   end
+
+  bash "mysql-setup-#{new_resource.vhost}" do
+    code <<-EOH
+    mysql -u root -p#{node.mysql.server_root_password} -e "
+    CREATE DATABASE #{new_resource.db_name};
+    GRANT ALL ON #{new_resource.db_name}.* TO '#{new_resource.db_user}'@'%' IDENTIFIED BY '#{new_resource.db_password}';
+    FLUSH PRIVILEGES;
+    "
+    EOH
+    action :nothing
+    subscribes :run, resources(:directory => site_path), :immediately
+  end
 end
