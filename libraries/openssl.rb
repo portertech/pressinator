@@ -29,5 +29,9 @@ module Pressinator
     def shadow_hash(plain_text)
       `openssl passwd -salt rF9v8pd8 -1 "#{plain_text}"`.chomp
     end
+
+    def secure_password(characters=12)
+      `openssl rand -base64 #{characters}`.delete('=').chomp
+    end
   end
 end
