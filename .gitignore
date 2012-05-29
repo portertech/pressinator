@@ -1,0 +1,5 @@
+.DS_Store
+*.lock
+examples/cookbooks
+examples/tmp
+.vagrant
