@@ -7,8 +7,9 @@ version          "0.0.1"
 
 %w[
   php
-  apache2
   mysql
+  apache2
+  nginx
   vsftpd
 ].each do |cookbook|
   depends cookbook

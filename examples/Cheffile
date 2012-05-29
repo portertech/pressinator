@@ -1,0 +1,9 @@
+site "http://community.opscode.com/api/v1"
+
+cookbook "php"
+cookbook "mysql"
+cookbook "apache2"
+cookbook "nginx"
+cookbook "vsftpd"
+cookbook "pressinator",
+  :git => "https://github.com/portertech/pressinator/"
