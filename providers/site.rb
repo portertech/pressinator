@@ -29,4 +29,36 @@ class Chef::Provider
 end
 
 action :create do
+  site_path = ::File.join(node.wordpress.root, new_resource.vhost)
+
+  remote_file "/usr/src/wordpress-#{node.wordpress.version}.tar.gz" do
+    checksum node.wordpress.checksum
+    source "http://wordpress.org/wordpress-#{node.wordpress.version}.tar.gz"
+    mode 0644
+  end
+
+  execute "echo '/bin/false' >> /etc/shells" do
+    not_if "grep /bin/false /etc/shells"
+  end
+
+  user new_resource.ftp_user do
+    home site_path
+    password shadow_hash(new_resource.ftp_password)
+    shell "/bin/false"
+  end
+
+  directory site_path do
+    recursive true
+    owner new_resource.ftp_user
+    mode 0755
+  end
+
+  execute "untar-wordpress-#{site_path}" do
+    command "tar --strip-components 1 -xzf /usr/src/wordpress-#{node.wordpress.version}.tar.gz"
+    cwd site_path
+    user new_resource.ftp_user
+    action :nothing
+    subscribes :run, resources(:directory => site_path), :immediately
+    only_if { (::Dir.entries(site_path) - %w[. ..]).count == 0 }
+  end
 end
