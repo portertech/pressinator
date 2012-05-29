@@ -23,3 +23,22 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+include_recipe "apache2"
+include_recipe "mysql::server"
+include_recipe "php"
+include_recipe "php::module_mysql"
+include_recipe "php::module_curl"
+include_recipe "php::module_fileinfo"
+include_recipe "apache2::mod_php5"
+
+package "apache2-mpm-itk" do
+  notifies :restart, resources(:service => "apache2"), :immediately
+end
+
+apache_site "000-default" do
+  enable false
+end
+
+include_recipe "nginx"
+include_recipe "vsftpd"

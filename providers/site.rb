@@ -29,4 +29,5 @@ class Chef::Provider
 end
 
 action :create do
+  include_recipe "pressinator"
 end
