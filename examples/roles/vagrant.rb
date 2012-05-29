@@ -1,3 +1,3 @@
 name "vagrant"
 description "Role for testing Pressinator"
-run_list()
+run_list("recipe[pressinator::test]")

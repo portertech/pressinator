@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pressinator
-# Provider:: site
+# Recipe:: test
 #
 # Copyright 2012, Sean Porter Consulting
 #
@@ -24,9 +24,12 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-class Chef::Provider
-  include Pressinator::OpenSSL
-end
+include_recipe "pressinator"
 
-action :create do
+pressinator_site "example.com" do
+  ftp_user "foo"
+  ftp_password "secret"
+  db_name "example"
+  db_user "bar"
+  db_password "secret"
 end

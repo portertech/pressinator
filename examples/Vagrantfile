@@ -10,8 +10,8 @@ Vagrant::Config.run do |config|
 
   config.vm.provision :shell, :inline => "gem install chef -v 0.10.8 --no-rdoc --no-ri"
 
-  config.vm.forward_port 2121, 21
-  config.vm.forward_port 8080, 80
+  config.vm.forward_port 21, 2121
+  config.vm.forward_port 80, 8080
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = "cookbooks"

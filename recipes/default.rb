@@ -24,6 +24,8 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+node.set.apache.listen_ports = ["8080"]
+
 include_recipe "apache2"
 include_recipe "mysql::server"
 include_recipe "php"
