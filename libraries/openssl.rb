@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: pressinator
-# Provider:: site
+# Library:: openssl
 #
 # Copyright 2012, Sean Porter Consulting
 #
@@ -24,9 +24,10 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-class Chef::Provider
-  include Pressinator::OpenSSL
-end
-
-action :create do
+module Pressinator
+  module OpenSSL
+    def shadow_hash(plain_text)
+      `openssl passwd -salt rF9v8pd8 -1 "#{plain_text}"`.chomp
+    end
+  end
 end

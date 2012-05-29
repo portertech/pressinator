@@ -1,4 +1,4 @@
 pressinator
 ===========
 
-Chef cookbook for building a Wordpress platform.
+Chef cookbook for multi-tenant Wordpress hosting.
