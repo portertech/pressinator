@@ -71,7 +71,7 @@ action :create do
     "
     EOH
     action :nothing
-    subscribes :run, resources(:directory => site_path), :immediately
+    subscribes :run, resources(:execute => "untar-wordpress-#{new_resource.vhost}"), :immediately
   end
 
   template ::File.join(site_path, "wp-config.php") do
