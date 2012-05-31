@@ -53,7 +53,7 @@ action :create do
     mode 0755
   end
 
-  execute "untar-wordpress-#{site_path}" do
+  execute "untar-wordpress-#{new_resource.vhost}" do
     command "tar --strip-components 1 -xzf /usr/src/wordpress-#{node.wordpress.version}.tar.gz"
     cwd site_path
     user new_resource.ftp_user
@@ -72,5 +72,25 @@ action :create do
     EOH
     action :nothing
     subscribes :run, resources(:directory => site_path), :immediately
+  end
+
+  template ::File.join(site_path, "wp-config.php") do
+    owner new_resource.ftp_user
+    mode 0644
+    variables(
+      :db_name => new_resource.db_name,
+      :db_user => new_resource.db_user,
+      :db_password => new_resource.db_password,
+      :auth_key => secure_password(64),
+      :secure_auth_key => secure_password(64),
+      :logged_in_key => secure_password(64),
+      :nonce_key => secure_password(64),
+      :auth_salt => secure_password(64),
+      :secure_auth_salt => secure_password(64),
+      :logged_in_salt => secure_password(64),
+      :nonce_salt => secure_password(64)
+    )
+    action :nothing
+    subscribes :create, resources(:execute => "untar-wordpress-#{new_resource.vhost}"), :immediately
   end
 end
