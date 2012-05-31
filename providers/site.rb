@@ -93,4 +93,18 @@ action :create do
     action :nothing
     subscribes :create, resources(:execute => "untar-wordpress-#{new_resource.vhost}"), :immediately
   end
+
+  apache_vhost = new_resource.vhost
+  apache_user = new_resource.ftp_user
+
+  web_app apache_vhost do
+    template "wordpress.conf.erb"
+    server_name apache_vhost
+    unless apache_vhost =~ /^www\./
+      server_aliases ["www.#{apache_vhost}"]
+    end
+    docroot site_path
+    user apache_user
+    max_clients node.pressinator.site.max_clients
+  end
 end

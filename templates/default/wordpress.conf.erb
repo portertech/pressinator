@@ -1,0 +1,35 @@
+<VirtualHost *:8080>
+
+  ServerName <%= @params[:server_name] %>
+<% if @params[:server_aliases] -%>
+  ServerAlias <%= @params[:server_aliases].join(" ") %>
+<% end -%>
+
+  DocumentRoot <%= @params[:docroot] %>
+
+  <Directory <%= @params[:docroot] %>>
+    Options FollowSymLinks
+    AllowOverride all
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+
+  <IfModule mpm_itk_module>
+    AssignUserId <%= @params[:user] %> <%= @params[:user] %>
+    MaxClientsVHost <%= @params[:max_clients] %>
+  </IfModule>
+
+  LogLevel info
+  ErrorLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-error.log
+  CustomLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-access.log combined
+
+  RewriteEngine On
+  RewriteLog <%= node['apache']['log_dir'] %>/<%= @params[:name] %>-rewrite.log
+  RewriteLogLevel 0
+
+</VirtualHost>
