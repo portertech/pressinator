@@ -67,6 +67,7 @@ action :create do
     mysql -u root -p#{node.mysql.server_root_password} -e "
     CREATE DATABASE #{new_resource.db_name};
     GRANT ALL ON #{new_resource.db_name}.* TO '#{new_resource.db_user}'@'%' IDENTIFIED BY '#{new_resource.db_password}';
+    GRANT ALL ON #{new_resource.db_name}.* TO '#{new_resource.db_user}'@'localhost' IDENTIFIED BY '#{new_resource.db_password}';
     FLUSH PRIVILEGES;
     "
     EOH
