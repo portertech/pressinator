@@ -31,7 +31,7 @@ module Pressinator
     end
 
     def secure_password(characters=12)
-      `openssl rand -base64 #{characters}`.delete('=').chomp
+      `openssl rand -base64 256`.gsub(/\W/, '').slice(0, characters)
     end
   end
 end
