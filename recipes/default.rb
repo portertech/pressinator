@@ -43,4 +43,13 @@ apache_site "000-default" do
 end
 
 include_recipe "nginx"
+
+template File.join(node.nginx.dir, "sites-available", "pressinator") do
+  source "nginx.erb"
+  mode 0644
+  variables()
+end
+
+nginx_site "pressinator"
+
 include_recipe "vsftpd"
