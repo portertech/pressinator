@@ -50,6 +50,10 @@ template File.join(node.nginx.dir, "sites-available", "pressinator") do
   variables()
 end
 
+nginx_site "default" do
+  enable false
+end
+
 nginx_site "pressinator"
 
 include_recipe "vsftpd"
