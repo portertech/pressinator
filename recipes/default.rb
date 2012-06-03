@@ -58,3 +58,12 @@ end
 nginx_site "pressinator"
 
 include_recipe "vsftpd"
+
+gem_package "ruby-shadow"
+
+ruby_block "require-shadow-library" do
+  block do
+    Gem.clear_paths
+    require 'shadow'
+  end
+end
