@@ -27,6 +27,14 @@
 node.set.apache.listen_ports = ["8080"]
 node.set.apache.keepalive = "Off"
 
+%w[
+  server_root_password
+  server_debian_password
+  server_repl_password
+].each do |attribute|
+  node.set.mysql[attribute] = node.mysql.root_password
+end
+
 include_recipe "apache2"
 include_recipe "mysql::server"
 include_recipe "php"

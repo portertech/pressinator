@@ -1,7 +1,5 @@
 # mysql
-default.mysql.server_debian_password = "secret"
-default.mysql.server_root_password = "secret"
-default.mysql.server_repl_password = "secret"
+default.mysql.root_password = "secret"
 
 # wordpress
 default.wordpress.root = "/opt/wordpress"
