@@ -95,6 +95,11 @@ action :create do
     subscribes :create, resources(:execute => "untar-wordpress-#{new_resource.vhost}"), :immediately
   end
 
+  cookbook_file ::File.join(site_path, "wp-content", "plugins", "nginx-proxy-cache-integrator.php") do
+    owner new_resource.ftp_user
+    mode 0644
+  end
+
   apache_vhost = new_resource.vhost
   apache_user = new_resource.ftp_user
 
