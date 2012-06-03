@@ -25,6 +25,7 @@
 #
 
 node.set.apache.listen_ports = ["8080"]
+node.set.apache.keepalive = "Off"
 
 include_recipe "apache2"
 include_recipe "mysql::server"
