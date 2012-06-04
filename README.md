@@ -4,7 +4,9 @@ Pressinator
 Chef cookbook for multi-tenant Wordpress hosting.
 
 Usage
----
+-----
+
+    include_recipe "pressinator"
 
     pressinator_site "example.com" do
       ftp_user "foo"
