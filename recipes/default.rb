@@ -55,7 +55,6 @@ include_recipe "nginx"
 template File.join(node.nginx.dir, "sites-available", "pressinator") do
   source "nginx.erb"
   mode 0644
-  variables()
 end
 
 nginx_site "default" do
